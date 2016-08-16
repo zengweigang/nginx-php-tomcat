@@ -52,7 +52,7 @@ RUN useradd --system --no-create-home --user-group nginx && mkdir -p /var/cache/
 	--add-module=/opt/http_subs \
 	&& make && make install
 
-ADD aliyun-epel.repo /etc/yum.repos.d/epel.repo
+
 
 RUN yum install -y --enablerepo=epel pwgen python-pip && \
     yum clean all
