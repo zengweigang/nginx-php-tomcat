@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="-1" shutdown="complicatedPassword231">
+<Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+<Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+<Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+<Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+<GlobalNamingResources>
+
+<Resource name="UserDatabase" auth="Container"
+          type="org.apache.catalina.UserDatabase"
+          description="User database that can be updated and saved"
+          factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+          pathname="conf/tomcat-users.xml" />
+</GlobalNamingResources>
+
+<Service name="Internal">
+<Connector port="9998" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           redirectPort="8443" />
+<Engine name="Internal" defaultHost="Internal">
+
+  <Realm className="org.apache.catalina.realm.LockOutRealm">
+    <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+           resourceName="UserDatabase"/>
+  </Realm>
+  <Host name="Internal"  appBase="internal"
+        unpackWARs="true" autoDeploy="true">
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+           prefix="internal_access_log" suffix=".txt"
+           pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+  </Host>
+</Engine>
+</Service>
+
+<Service name="External">
+<Connector port="8079" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           redirectPort="8443" />
+<Engine name="External" defaultHost="External">
+
+  <Realm className="org.apache.catalina.realm.LockOutRealm">
+    <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+           resourceName="UserDatabase"/>
+  </Realm>
+  <Host name="External"  appBase="external"
+        unpackWARs="true" autoDeploy="true">
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+           prefix="external_access_log" suffix=".txt"
+           pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+  </Host>
+</Engine>
+</Service>
+</Server>
