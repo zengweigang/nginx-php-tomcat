@@ -63,10 +63,10 @@ ADD supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /etc/supervisor.conf.d && \
     mkdir -p /var/log/supervisor
 
-RUN wget https://raw.githubusercontent.com/szmolin/dist/master/s3fs/v1.79.tar.gz -O /usr/src/v1.79.tar.gz
+RUN wget https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.80.tar.gz -O /usr/src/v1.80.tar.gz
 
-RUN tar xvz -C /usr/src -f /usr/src/v1.79.tar.gz
-RUN cd /usr/src/s3fs-fuse-1.79 && ./autogen.sh && ./configure --prefix=/usr && make && make install
+RUN tar xvz -C /usr/src -f /usr/src/v1.80.tar.gz
+RUN cd /usr/src/s3fs-fuse-1.80  && ./autogen.sh && ./configure --prefix=/usr && make && make install
 
 # Set environment variable
 ENV	APP_DIR /app
